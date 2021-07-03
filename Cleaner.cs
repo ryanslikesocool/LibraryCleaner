@@ -90,6 +90,14 @@ namespace LibraryCleaner
                     CleanDirectories(path, AssetDatabaseDirectories);
                     CleanFiles(path, AssetDatabaseFiles);
                 }
+                if (settings.deleteAdditionalFolders.Length > 0)
+                {
+                    CleanDirectories(path, settings.deleteAdditionalFolders);
+                }
+                if (settings.deleteAdditionalFiles.Length > 0)
+                {
+                    CleanDirectories(path, settings.deleteAdditionalFiles);
+                }
             }
         }
 

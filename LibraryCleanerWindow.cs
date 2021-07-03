@@ -15,11 +15,14 @@ namespace LibraryCleaner
         private SerializedProperty cleanThresholdProp = null;
         private SerializedProperty cleanThresholdUnitProp = null;
 
+        private SerializedProperty deleteEverythingProp = null;
         private SerializedProperty deletePackageCacheProp = null;
         private SerializedProperty deleteScriptAssembliesProp = null;
         private SerializedProperty deleteShaderCacheProp = null;
         private SerializedProperty deleteAssetDatabaseProp = null;
-        private SerializedProperty deleteEverythingProp = null;
+
+        private SerializedProperty deleteAdditionalFoldersProp = null;
+        private SerializedProperty deleteAdditionalFilesProp = null;
 
         [MenuItem("Tools/ifelse/LibraryCleaner Manager")]
         private static void Init()
@@ -88,6 +91,18 @@ namespace LibraryCleaner
                 }
                 EditorGUILayout.PropertyField(deleteAssetDatabaseProp, true);
 
+                if (settings.deleteAdditionalFolders.Length > 0)
+                {
+                    EditorGUILayout.HelpBox("Add folder names relative to the Library folder.", MessageType.None, true);
+                }
+                EditorGUILayout.PropertyField(deleteAdditionalFoldersProp, true);
+
+                if (settings.deleteAdditionalFiles.Length > 0)
+                {
+                    EditorGUILayout.HelpBox("Add file names relative to the Library folder.", MessageType.None, true);
+                }
+                EditorGUILayout.PropertyField(deleteAdditionalFilesProp, true);
+
                 EditorGUI.EndDisabledGroup();
 
                 scriptableObject.ApplyModifiedProperties();
@@ -112,6 +127,10 @@ namespace LibraryCleaner
             {
                 cleanThresholdUnitProp = scriptableObject.FindProperty("cleanThresholdUnit");
             }
+            if (deleteEverythingProp == null)
+            {
+                deleteEverythingProp = scriptableObject.FindProperty("deleteEverything");
+            }
             if (deletePackageCacheProp == null)
             {
                 deletePackageCacheProp = scriptableObject.FindProperty("deletePackageCache");
@@ -128,9 +147,13 @@ namespace LibraryCleaner
             {
                 deleteAssetDatabaseProp = scriptableObject.FindProperty("deleteAssetDatabase");
             }
-            if (deleteEverythingProp == null)
+            if (deleteAdditionalFoldersProp == null)
             {
-                deleteEverythingProp = scriptableObject.FindProperty("deleteEverything");
+                deleteAdditionalFoldersProp = scriptableObject.FindProperty("deleteAdditionalFolders");
+            }
+            if (deleteAdditionalFilesProp == null)
+            {
+                deleteAdditionalFilesProp = scriptableObject.FindProperty("deleteAdditionalFiles");
             }
         }
     }

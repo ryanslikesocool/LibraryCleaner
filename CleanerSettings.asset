@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: CleanerSettings
   m_EditorClassIdentifier: 
   cleanCondition: 1
-  cleanThreshold: 1.5
+  cleanThreshold: 2.5
   cleanThresholdUnit: 1
   deleteEverything: 0
-  deletePackageCache: 1
+  deletePackageCache: 0
   deleteScriptAssemblies: 0
   deleteShaderCache: 0
   deleteAssetDatabase: 0
+  deleteAdditionalFolders:
+  - il2cpp_android_arm64-v8a
+  - Il2cppBuildCache
+  - BurstCache
+  deleteAdditionalFiles: []

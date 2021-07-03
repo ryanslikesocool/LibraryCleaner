@@ -1,7 +1,7 @@
 {
     "name": "com.ifelse.librarycleaner",
     "displayName": "LibraryCleaner",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "unity": "2020.1",
     "description": "Configurable Library folder cleaner for Unity.",
     "documentationUrl": "https://github.com/ryanslikesocool/LibraryCleaner",
