@@ -1,22 +1,22 @@
 # LibraryCleaner
 Configurable Library folder cleaner for Unity
 
-**RECOMMENDED INSTALLATION**
-Add via the Unity Package Manager
-"Add package from git URL..."
-https://github.com/ryanslikesocool/Easings.git
+**RECOMMENDED INSTALLATION**\
+Add via the Unity Package Manager\
+"Add package from git URL..."\
+`https://github.com/ryanslikesocool/Easings.git` \
 Add
 
-**Not-so Recommended Installation**
-Get the latest release
-Open with the desired Unity project
+**Not-so Recommended Installation**\
+Get the latest release\
+Open with the desired Unity project\
 Import into the Plugins folder
 
 The editor must be restarted after installing for the Library folder to be cleaned.
 
 ## Usage
-Select `Tools/ifelse/LibraryCleaner Manager` from the menu bar to open the manager window.
-Pick the settings scriptable object labeled "CleanerSettings".  There should only be one in a project.
+Select `Tools/ifelse/LibraryCleaner Manager` from the menu bar to open the manager window.\
+Pick the settings scriptable object labeled "CleanerSettings".  There should only be one in a project.\
 Set the desired settings.  The Library folder will be cleaned accordingly when the editor is quit.
 
 - Clean Condition
