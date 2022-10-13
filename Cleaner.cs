@@ -5,12 +5,10 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 
-namespace LibraryCleaner
-{
+namespace LibraryCleaner {
     [InitializeOnLoad]
-    public class Cleaner
-    {
-        private const string PACKAGE_SETTINGS_PATH = "Packages/com.ifelse.librarycleaner/CleanerSettings.asset";
+    public class Cleaner {
+        private const string PACKAGE_SETTINGS_PATH = "Packages/com.developedwithlove.librarycleaner/CleanerSettings.asset";
         private const string LOCAL_SETTINGS_PATH = "Assets/Plugins/LibraryCleaner/CleanerSettings.asset";
 
         private static readonly string[] PackageCacheDirectories = new string[] {
@@ -42,125 +40,97 @@ namespace LibraryCleaner
 
         static Cleaner() => EditorApplication.quitting += Clean;
 
-        public static void Clean()
-        {
+        public static void Clean() {
             string path = Application.dataPath.Replace("Assets", "Library");
 
             LibraryCleanerSettings settings = null;
-            if (File.Exists(LOCAL_SETTINGS_PATH))
-            {
+            if (File.Exists(LOCAL_SETTINGS_PATH)) {
                 settings = (LibraryCleanerSettings)AssetDatabase.LoadAssetAtPath(LOCAL_SETTINGS_PATH, typeof(LibraryCleanerSettings));
-            }
-            else if (File.Exists(PACKAGE_SETTINGS_PATH))
-            {
+            } else if (File.Exists(PACKAGE_SETTINGS_PATH)) {
                 settings = (LibraryCleanerSettings)AssetDatabase.LoadAssetAtPath(PACKAGE_SETTINGS_PATH, typeof(LibraryCleanerSettings));
             }
             if (settings == null) { return; }
 
-            if (settings.cleanCondition == CleanCondition.Always || ConvertUnit(DirectorySize(path), settings.cleanThresholdUnit) > settings.cleanThreshold)
-            {
+            if (settings.cleanCondition == CleanCondition.Always || ConvertUnit(DirectorySize(path), settings.cleanThresholdUnit) > settings.cleanThreshold) {
                 Clean(path, settings);
             }
         }
 
-        private static void Clean(string path, LibraryCleanerSettings settings)
-        {
-            if (settings.deleteEverything)
-            {
+        private static void Clean(string path, LibraryCleanerSettings settings) {
+            if (settings.deleteEverything) {
                 DirectoryInfo d = new DirectoryInfo(path);
                 CleanDirectory(d);
-            }
-            else
-            {
-                if (settings.deletePackageCache)
-                {
+            } else {
+                if (settings.deletePackageCache) {
                     CleanDirectories(path, PackageCacheDirectories);
                 }
-                if (settings.deleteScriptAssemblies)
-                {
+                if (settings.deleteScriptAssemblies) {
                     CleanDirectories(path, ScriptAssemblyDirectories);
                 }
-                if (settings.deleteShaderCache)
-                {
+                if (settings.deleteShaderCache) {
                     CleanDirectories(path, ShaderCacheDirectories);
                     CleanFiles(path, ShaderCacheFiles);
                 }
-                if (settings.deleteAssetDatabase)
-                {
+                if (settings.deleteAssetDatabase) {
                     CleanDirectories(path, AssetDatabaseDirectories);
                     CleanFiles(path, AssetDatabaseFiles);
                 }
-                if (settings.deleteAdditionalFolders.Length > 0)
-                {
+                if (settings.deleteAdditionalFolders.Length > 0) {
                     CleanDirectories(path, settings.deleteAdditionalFolders);
                 }
-                if (settings.deleteAdditionalFiles.Length > 0)
-                {
+                if (settings.deleteAdditionalFiles.Length > 0) {
                     CleanDirectories(path, settings.deleteAdditionalFiles);
                 }
             }
         }
 
-        private static void CleanDirectory(DirectoryInfo di)
-        {
-            foreach (FileInfo file in di.EnumerateFiles())
-            {
+        private static void CleanDirectory(DirectoryInfo di) {
+            foreach (FileInfo file in di.EnumerateFiles()) {
                 file.Delete();
             }
-            foreach (DirectoryInfo dir in di.EnumerateDirectories())
-            {
+            foreach (DirectoryInfo dir in di.EnumerateDirectories()) {
                 dir.Delete(true);
             }
         }
 
-        private static void CleanDirectories(string path, string[] folders)
-        {
-            foreach (string folder in folders)
-            {
+        private static void CleanDirectories(string path, string[] folders) {
+            foreach (string folder in folders) {
                 string p = Path.Combine(path, folder);
                 DirectoryInfo d = new DirectoryInfo(p);
                 CleanDirectory(d);
             }
         }
 
-        private static void CleanFiles(string path, string[] files)
-        {
-            foreach (string file in files)
-            {
+        private static void CleanFiles(string path, string[] files) {
+            foreach (string file in files) {
                 string p = Path.Combine(path, file);
                 FileInfo f = new FileInfo(p);
                 f.Delete();
             }
         }
 
-        private static long DirectorySize(string path)
-        {
+        private static long DirectorySize(string path) {
             DirectoryInfo d = new DirectoryInfo(path);
             return DirectorySize(d);
         }
 
-        private static long DirectorySize(DirectoryInfo d)
-        {
+        private static long DirectorySize(DirectoryInfo d) {
             long size = 0;
 
             FileInfo[] fileInfos = d.GetFiles();
-            foreach (FileInfo info in fileInfos)
-            {
+            foreach (FileInfo info in fileInfos) {
                 size += info.Length;
             }
 
             DirectoryInfo[] directoryInfos = d.GetDirectories();
-            foreach (DirectoryInfo directoryInfo in directoryInfos)
-            {
+            foreach (DirectoryInfo directoryInfo in directoryInfos) {
                 size += DirectorySize(directoryInfo);
             }
             return size;
         }
 
-        private static float ConvertUnit(long bytes, StorageUnit unit)
-        {
-            switch (unit)
-            {
+        private static float ConvertUnit(long bytes, StorageUnit unit) {
+            switch (unit) {
                 case StorageUnit.Megabyte: return bytes / 1000000f;
                 default: return bytes / 1000000000f;
             }

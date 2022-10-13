@@ -15,7 +15,7 @@ Import into the Plugins folder
 The editor must be restarted after installing for the Library folder to be cleaned.
 
 ## Usage
-Select `Tools/ifelse/LibraryCleaner Manager` from the menu bar to open the manager window.\
+Select `Tools/Developed With Love/LibraryCleaner Manager` from the menu bar to open the manager window.\
 Pick the settings scriptable object labeled "CleanerSettings".  There should only be one in a project.\
 Set the desired settings.  The Library folder will be cleaned accordingly when the editor is quit.
 
